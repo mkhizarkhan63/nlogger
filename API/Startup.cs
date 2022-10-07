@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MySql.Data.MySqlClient;
 using Pomelo.EntityFrameworkCore.MySql.Storage;
 using System;
@@ -41,7 +42,7 @@ namespace API
             services.AddDbContextPool<DataContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers();
          
 
             // configure strongly typed settings objects
@@ -71,13 +72,34 @@ namespace API
                 };
             });
             services.AddScoped<IUserService, UserService>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "EagleEye API",
+                    Version = "v1",
+                    Description = "Description for the API goes here.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "M.Khizar Khan",
+                        Email = "mkhizarkhan63@gmail.com",
+                    },
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env )
         {
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "EagleEye API V1");
 
+                // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
+                c.RoutePrefix = string.Empty;
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -103,7 +125,7 @@ namespace API
             {
                 endpoints.MapControllers();
             });
-
+           
 
         }
     }

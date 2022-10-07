@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,6 +19,7 @@ namespace API.Controllers
             _logger.LogDebug(1, "NLog injected into HomeController");
         }
 
+        [HttpGet]
         public string Index()
         {
             _logger.LogInformation("Hello, this is the index!");
