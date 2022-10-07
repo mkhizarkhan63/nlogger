@@ -16,16 +16,16 @@ namespace API
 
         public static void Main(string[] args)
         {
-            var logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
+            var logger = NLogBuilder.ConfigureNLog("NLog.xsd").GetCurrentClassLogger();
             try
             {
-                logger.Debug("Application Starting Up");
+               
             
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception exception)
             {
-                logger.Trace(exception, "Stopped program because of exception");
+                logger.Error(exception, "Stopped program because of exception");
                 throw;
             }
             finally

@@ -99,6 +99,7 @@ namespace API.Repository
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception");
+
                 return new AuthenticateResponse();
             }
 

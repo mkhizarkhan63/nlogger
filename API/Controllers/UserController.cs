@@ -20,9 +20,10 @@ namespace API.Controllers
     {
 
         private readonly IUserService _userService;
-
-        public UserController(IUserService _userService)
+        private readonly ILogger<UserController> _logger;
+        public UserController(IUserService _userService, ILogger<UserController> logger)
         {
+            _logger = logger;
             this._userService = _userService;
 
         }
@@ -58,8 +59,9 @@ namespace API.Controllers
 
                 return Ok(response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+
                 return BadRequest();
             }
 

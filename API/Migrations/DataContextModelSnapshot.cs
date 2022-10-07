@@ -23,11 +23,8 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Application")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Callsite")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Exceptions")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -35,8 +32,8 @@ namespace API.Migrations
                     b.Property<string>("Level")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("Logged")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("Linenumber")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Logger")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
